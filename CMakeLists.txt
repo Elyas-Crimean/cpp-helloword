@@ -1,2 +1,6 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 add_executable(build_test main.cpp)
+
+SET(CPACK_GENERATOR "DEB")
+
+INCLUDE(CPack)
