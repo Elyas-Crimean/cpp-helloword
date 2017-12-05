@@ -9,4 +9,4 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - curl -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -uElyas-Crimean:$BINTRAY_API_KEY "https://api.bintray.com/content/elyas-crimean/Elyas-otus-cpp/helloworld/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - curl -T build_test-2.3.4.$TRAVIS_BUILD_NUMBER-Linux.deb -uElyas-Crimean:$BINTRAY_API_KEY "https://api.bintray.com/content/elyas-crimean/Elyas-otus/build_test/$TRAVIS_BUILD_NUMBER/build_test-2.3.4.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
