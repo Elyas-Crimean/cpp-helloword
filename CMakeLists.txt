@@ -1,15 +1,38 @@
-project(buildtest)
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-add_executable(build_test main.cpp)
 
-INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/build_test DESTINATION local/bin)
+if(TRAVIS_BUILD_NUMBER)
+SET(VERSION_PATCH "$ENV{TRAVIS_BUILD_NUMBER}")
+else()
+SET(VERSION_PATCH "999")
+endif()
+
+project(buildtest VERSION 2.0.${VERSION_PATCH})
+
+
+add_executable(build_test main.cpp)
+add_executable(test_version test.cpp)
+add_library(versions lib.cpp)
+
+set_target_properties(build_test versions test_version PROPERTIES
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED ON
+    COMPILE_OPTIONS -Wpedantic -Wall -Wextra
+    INCLUDE_DIRECTORIES ${CMAKE_CURRENT_BINARY_DIR}
+)
+
+target_link_libraries(build_test versions)
+target_link_libraries(test_version versions)
+
+INSTALL(TARGETS build_test RUNTIME DESTINATION bin)
 
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Ilia Sobolev")
-#SET(CPACK_PROJECT_NAME "build_test")
-SET(CPACK_PACKAGE_VERSION_MAJOR "2")
-SET(CPACK_PACKAGE_VERSION_MINOR "3")
-SET(CPACK_PACKAGE_VERSION_PATCH "4")
-SET(CPACK_PACKAGE_VERSION_TWEAK "9")
+SET(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+SET(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+SET(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+SET(CPACK_PACKAGE_VERSION_TWEAK "${PROJECT_VERSION_TWEAK}")
 
 INCLUDE(CPack)
+
+enable_testing()
+add_test(simple_check test_version)
