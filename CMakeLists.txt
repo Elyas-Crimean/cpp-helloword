@@ -2,6 +2,8 @@ project(build_test)
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 add_executable(build_test main.cpp)
 
+INSTALL(PROGRAMS ${CMAKE_BINARY_DIR}/build_test DESTINATION local/bin)
+
 SET(CPACK_GENERATOR "DEB")
 SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Ilia Sobolev")
 #SET(CPACK_PROJECT_NAME "build_test")
