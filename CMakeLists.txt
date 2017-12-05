@@ -8,7 +8,7 @@ endif()
 
 project(buildtest VERSION 2.0.${VERSION_PATCH})
 
-
+configure_file(version.h.in version.h)
 add_executable(build_test main.cpp)
 add_executable(test_version test.cpp)
 add_library(versions lib.cpp)
